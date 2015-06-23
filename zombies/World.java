@@ -30,19 +30,14 @@ public class World extends JPanel {
 	}
 	
 	public void update() {
+		Tile[][] temp = new Tile[width][height];
+		for (int i = 0; i < grid.length; i++) {
+			System.arraycopy(grid[i], 0, temp[i], 0, grid[i].length);
+		}
+		
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
-				switch(rand.nextInt(50) % 3) {
-					case 0:
-						grid[x][y] = new Human(x, y);
-						break;
-					case 1:
-						grid[x][y] = new Zombie(x, y);
-						break;
-					default:
-						grid[x][y] = new Tile(x, y);
-						break;
-				}
+				grid[x][y].update(this, temp);
 			}
 		}
 	}

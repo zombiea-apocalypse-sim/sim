@@ -20,6 +20,7 @@ class Tile {
 		this.y = y;
 		color = Color.black;
 	}
+
     public boolean frontIsClear(Tile[][] grid, int xCo,	int yCo,int dir) {
 	int destinationX;
 	int destinationY;
@@ -35,4 +36,6 @@ class Tile {
 	Tile destTile = grid[destinationX][destinationY];
 	if(destTile.color == black) {
     }
+
+	
 }
