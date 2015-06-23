@@ -35,15 +35,18 @@ public class Renderer {
 		frame.add(total, BorderLayout.CENTER);
 		
 		/* Set location and size of the window */
-		World world = new World();
+		int width = 120;
+		int height = 80;
+		World world = new World(width, height);
 		
-		world.setBounds(0, 0, 1200, 800);
+		world.setBounds(0, 0, width*world.tile_size, height*world.tile_size);
 		world.setOpaque(true);
 		total.add(world, 0, 0);
 		
 		Menu menu = new Menu();
 		menu.setBounds(200, 200, 800, 400);
 		menu.setOpaque(true);
+		menu.setVisible(false);
 		total.add(menu, 1, 0);
 		
 		frame.addKeyListener(new KeyListener() {
@@ -70,7 +73,7 @@ public class Renderer {
 		
 		frame.setVisible(true);
 		
-		new javax.swing.Timer(20, new ActionListener() {
+		new javax.swing.Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				world.update();
 				frame.getContentPane().repaint();

@@ -6,12 +6,16 @@ import java.util.Random;
 
 public class World extends JPanel {
 	Random rand = new Random();
-	int width = 120;
-	int height = 80;
+	int width;
+	int height;
 	int tile_size = 10;
-	Tile[][] grid = new Tile[width][height];
+	Tile[][] grid;
 	
-	public World() {
+	public World(int width, int height) {
+		this.width = width;
+		this.height = height;
+		grid = new Tile[width][height];
+		
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
 				switch(rand.nextInt(50) % 3) {
@@ -37,7 +41,7 @@ public class World extends JPanel {
 		
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
-				grid[x][y].update(this, temp);
+				temp[x][y].update(this, temp);
 			}
 		}
 	}
