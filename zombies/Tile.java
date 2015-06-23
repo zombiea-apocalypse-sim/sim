@@ -14,4 +14,8 @@ class Tile {
 		this.y = y;
 		color = Color.black;
 	}
+	
+	public void update(World world, Tile[][] temp) {
+	
+	}
 }
