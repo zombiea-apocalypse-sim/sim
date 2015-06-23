@@ -14,11 +14,13 @@ public class Renderer {
 		/* Schedule a job for the event-dispatching thread:
 		 * creating and showing this application's GUI.
 		 */
+				
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				initWindow();
 			}
 		});
+		
 	}
 	
 	/* 
@@ -35,12 +37,12 @@ public class Renderer {
 		/* Set location and size of the window */
 		World world = new World();
 		
-		world.setBounds(0, 0, 600, 400);
+		world.setBounds(0, 0, 1200, 800);
 		world.setOpaque(true);
 		total.add(world, 0, 0);
 		
 		Menu menu = new Menu();
-		menu.setBounds(100, 100, 400, 200);
+		menu.setBounds(200, 200, 800, 400);
 		menu.setOpaque(true);
 		total.add(menu, 1, 0);
 		
@@ -59,7 +61,7 @@ public class Renderer {
 			}
 		});
 		
-		frame.setSize(600, 400 + windowBarHeight);
+		frame.setSize(1200, 800 + windowBarHeight);
 		frame.setResizable(false);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
@@ -67,5 +69,12 @@ public class Renderer {
 		frame.setLocation(x, y);
 		
 		frame.setVisible(true);
+		
+		new javax.swing.Timer(20, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				world.update();
+				frame.getContentPane().repaint();
+        	}
+		}).start();
 	}
 }

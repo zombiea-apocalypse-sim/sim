@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class World extends JPanel {
 	Random rand = new Random();
-	int width = 60;
-	int height = 40;
+	int width = 120;
+	int height = 80;
 	int tile_size = 10;
 	Tile[][] grid = new Tile[width][height];
 	
@@ -27,6 +27,24 @@ public class World extends JPanel {
 				}
 			}
 		}	
+	}
+	
+	public void update() {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				switch(rand.nextInt(50) % 3) {
+					case 0:
+						grid[x][y] = new Human(x, y);
+						break;
+					case 1:
+						grid[x][y] = new Zombie(x, y);
+						break;
+					default:
+						grid[x][y] = new Tile(x, y);
+						break;
+				}
+			}
+		}
 	}
 	
 	protected void paintComponent(Graphics g) {

@@ -5,29 +5,43 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Menu extends JPanel {
-	public JSlider slider;
-	public JCheckBox behavior1;
+	public JSlider zombieCount;
+	public JSlider humanCount;
+	public JCheckBox runBehavior;
+	public JCheckBox killBehavior;
 	
 	public Menu() {
-		slider = new JSlider();
-		behavior1 = new JCheckBox();
+		zombieCount = new JSlider();
+		humanCount = new JSlider();
+		runBehavior = new JCheckBox("Run");
+		killBehavior = new JCheckBox("Kill");
 		
-		slider.setLayout(null);
-		slider.setMajorTickSpacing(5);
-		slider.setPaintTicks(true);
-		slider.setSize(200, 200);
-		slider.setVisible(true);
+		zombieCount.setLayout(null);
+		zombieCount.setMajorTickSpacing(5);
+		zombieCount.setPaintTicks(true);
+		zombieCount.setSize(200, 200);
+		zombieCount.setVisible(true);
 		
-		slider.setFocusable(false);
-		behavior1.setFocusable(false);
+		humanCount.setLayout(null);
+		humanCount.setMajorTickSpacing(5);
+		humanCount.setPaintTicks(true);
+		humanCount.setSize(200, 200);
+		humanCount.setVisible(true);
 		
-		this.add(behavior1);
-		this.add(slider);
+		zombieCount.setFocusable(false);
+		humanCount.setFocusable(false);
+		runBehavior.setFocusable(false);
+		killBehavior.setFocusable(false);
+		
+		this.add(zombieCount);
+		this.add(humanCount);
+		this.add(runBehavior);
+		this.add(killBehavior);
 	}
 	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.white);
-		g.fillRect(0, 0, 400, 200);
+		g.fillRect(0, 0, 800, 400);
 	}
 }
