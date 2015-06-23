@@ -34,7 +34,7 @@ class Zombie extends Tile {
 					break;
 				
 				case SOUTH:
-					if(validMove(world, tempgrid, x, y - 1)) {
+					if(validMove(world, tempgrid, x, y + 1)) {
 						success = move(world, tempgrid, SOUTH);
 					}
 					break;

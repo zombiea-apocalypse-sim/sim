@@ -73,7 +73,7 @@ public class Renderer {
 		
 		frame.setVisible(true);
 		
-		new javax.swing.Timer(1000, new ActionListener() {
+		new javax.swing.Timer(20, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				world.update();
 				frame.getContentPane().repaint();

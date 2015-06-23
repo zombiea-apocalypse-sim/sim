@@ -35,30 +35,18 @@ class Tile {
 		switch(dir) {
 			case NORTH:
 				new_y--;
-				if(new_y < 0) {
-					return false;
-				}
 				break;
 			
 			case EAST:
 				new_x++;
-				if(new_x >= world.width) {
-					return false;
-				}
 				break;
 			
 			case SOUTH:
 				new_y++;
-				if(new_y >= world.height) {
-					return false;
-				}
 				break;
 			
 			case WEST:
 				new_x--;
-				if(new_x < 0) {
-					return false;
-				}
 				break;
 		}
 		
