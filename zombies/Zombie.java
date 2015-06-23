@@ -12,6 +12,6 @@ class Zombie extends Tile {
 		direction = 1;
 	}
 	
-	public void update() {		
+	public void update() {
 	}
 }
