@@ -2,8 +2,11 @@ package zombies;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class Renderer {
+	final static int windowBarHeight = 22;
+	
 	/*
 	 * Main Function
 	 */
@@ -26,9 +29,37 @@ public class Renderer {
 		JFrame frame = new JFrame("Zombie Simulator 2015");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		JLayeredPane total = new JLayeredPane();
+		frame.add(total, BorderLayout.CENTER);
+		
 		/* Set location and size of the window */
-		frame.add(new World());
-		frame.setSize(600, 400);
+		World world = new World();
+		
+		world.setBounds(0, 0, 600, 400);
+		world.setOpaque(true);
+		total.add(world, 0, 0);
+		
+		Menu menu = new Menu();
+		menu.setBounds(100, 100, 400, 200);
+		menu.setOpaque(true);
+		total.add(menu, 1, 0);
+		
+		frame.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {}
+
+			@Override
+			public void keyReleased(KeyEvent e) {}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyChar() == 'm') {
+					menu.setVisible(!menu.isVisible());
+				}
+			}
+		});
+		
+		frame.setSize(600, 400 + windowBarHeight);
 		frame.setResizable(false);
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
