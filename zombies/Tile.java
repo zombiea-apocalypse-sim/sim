@@ -3,6 +3,7 @@ package zombies;
 import javax.swing.*;
 import java.awt.*;
 
+
 class Tile {
 	final static int NORTH = 0;
 	final static int EAST = 1;
@@ -68,4 +69,22 @@ class Tile {
 		
 		return true;
 	}
+
+// Overbodig?
+//     public boolean frontIsClear(Tile[][] grid, int xCo,	int yCo,int dir) {
+// 		int destinationX;
+// 		int destinationY;
+// 		if(dir == NORTH) {
+// 		    destinationY = yCo - 1;
+// 		} else if(dir == EAST) {
+// 		    destinationX = xCo + 1;
+// 		} else if(dir == SOUTH) {
+// 		    destinationY = yCo + 1;
+// 		} else if(dir == WEST) {
+// 		    destinationX = xCo - 1;
+// 		}
+// 		Tile destTile = grid[destinationX][destinationY];
+// 		if(destTile.color == black) {
+//     	}
+// 	}	
 }
