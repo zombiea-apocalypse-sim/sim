@@ -13,7 +13,7 @@ class Zombie extends Tile {
 
 	@Override
 	public void update(currentWorld, tempWorld) {
-		walkZombie(tempWorld.grid);
+		walkZombie();
 	}
 
 	private void walkZombie() {
@@ -36,20 +36,24 @@ class Zombie extends Tile {
 			int dir = (temp + i) % 4;
 			switch (dir) {
 				case NORTH:
-					if ( tileNorth.color == Color.black || tileNorth.color == Color.pink )
+					if ( tileNorth.color == Color.black || tileNorth.color == Color.pink
+							&& inBounderies() )
 						return tileNorth;
 					break;
 
 				case SOUTH:
-					if ( tileSouth.color == Color.black || tileSouth.color == Color.pink )
+					if ( tileSouth.color == Color.black || tileSouth.color == Color.pink
+							&& inBounderies())
 						return tileSouth;
 					break;
 				case EAST:
-					if ( tileEast.color == Color.black || tileEast.color == Color.pink )
+					if ( tileEast.color == Color.black || tileEast.color == Color.pink
+							&& inBounderies())
 						return tileEast;
 					break;
 				case WEST:
-					if ( tileWest.color == Color.black || tileWest.color == Color.pink )
+					if ( tileWest.color == Color.black || tileWest.color == Color.pink
+							&& inBounderies() )
 						return tileWest;
 					break;
 			}
@@ -57,6 +61,10 @@ class Zombie extends Tile {
 		}
 
 		return currentTile;
+	}
+
+	private boolean inBounderies() {
+		if ()
 	}
 
 }
