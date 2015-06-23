@@ -11,7 +11,7 @@ class Zombie extends Tile {
 		direction = 1;
 	}
 
-	@Override
+	
 	public void update(currentWorld, tempWorld) {
 		walkZombie();
 	}
