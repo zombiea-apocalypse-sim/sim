@@ -20,16 +20,13 @@ class Human extends Tile {
     public void update(World world, Tile[][] tempgrid) {
 	int dir;
 	boolean success = false;
-	if(becomeZombie(world, tempgrid, x, y)) {
-	    
-	} else {
-	    for(int i = 0; i < 4; i++) {
-		dir = this.direction;
-		switch(dir) {
-		case NORTH:
-		    if(validMove(world, tempgrid, x, y - 1)) {
-			success = move(world, tempgrid, NORTH);
-		    } else {
+	for(int i = 0; i < 4; i++) {
+	    dir = this.direction;
+	    switch(dir) {
+	    case NORTH:
+		if(validMove(world, tempgrid, x, y - 1)) {
+		    success = move(world, tempgrid, NORTH);
+		} else {
 			this.direction = EAST;
 		    }
 		    break;
@@ -62,7 +59,7 @@ class Human extends Tile {
 		if(success) {
 		    break;
 		}
-	    }
+	    
 	}
     }
    
@@ -86,12 +83,7 @@ class Human extends Tile {
 	return true;
     }
 
-    public boolean becomeZombie(World world, Tile[][] tempgrid, int x, int y) {
-	
-	return true;
-    }
-
     public boolean zombieSpotted(World world, Tile[][] tempgrid, int x, int y) {
-	return true;
+	return false;
     }
 }
