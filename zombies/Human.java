@@ -17,7 +17,9 @@ class Human extends Tile {
 	}
 
 	public void update(World world, Tile[][] tempgrid) {
-		int dir;
+	  Random rand = new Random();
+    this.direction = rand.nextInt(4);
+		int dir = this.direction;
 		boolean success = false;
 		
 		for(int i = 0; i < 4; i++) {
