@@ -61,23 +61,5 @@ class Tile {
 	 */
 	public int manhattanDistance(int endX, int endY) {
 		return Math.abs(this.x - endX) + Math.abs(this.y - endY);
-	}
-	
-// Overbodig?
-//     public boolean frontIsClear(Tile[][] grid, int xCo,	int yCo,int dir) {
-// 		int destinationX;
-// 		int destinationY;
-// 		if(dir == NORTH) {
-// 		    destinationY = yCo - 1;
-// 		} else if(dir == EAST) {
-// 		    destinationX = xCo + 1;
-// 		} else if(dir == SOUTH) {
-// 		    destinationY = yCo + 1;
-// 		} else if(dir == WEST) {
-// 		    destinationX = xCo - 1;
-// 		}
-// 		Tile destTile = grid[destinationX][destinationY];
-// 		if(destTile.color == black) {
-//     	}
-// 	}	
+	}	
 }

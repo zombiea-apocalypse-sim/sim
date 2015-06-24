@@ -61,7 +61,7 @@ public class ZombieSimulator {
 		total.add(world, 0, 0);
 		
 		/* Create ans setup Menu (extends JPanel) */
-		Menu menu = new Menu();
+		Menu menu = new Menu(world);
 		menu.setBounds(200, 200, windowWidth - 2*200, windowHeight - 2*200);
 		menu.setOpaque(true);
 		menu.setVisible(false);
