@@ -25,7 +25,7 @@ class Human extends Tile {
 			switch(dir) {
 				case NORTH:
 					if(validMove(world, tempgrid, x, y - 1)) {
-						move(world, tempgrid, NORTH);
+						move(world, NORTH);
 						success = true;
 					}
 					else {
@@ -35,7 +35,7 @@ class Human extends Tile {
 	
 				case EAST:
 					if(validMove(world, tempgrid, x + 1, y)) {
-						move(world, tempgrid, EAST);
+						move(world, EAST);
 						success = true;
 					}
 					else {
@@ -45,7 +45,7 @@ class Human extends Tile {
 	
 				case SOUTH:
 					if(validMove(world, tempgrid, x, y + 1)) {
-						move(world, tempgrid, SOUTH);
+						move(world, SOUTH);
 						success = true;
 					}
 					else {
@@ -55,7 +55,7 @@ class Human extends Tile {
 			
 				case WEST:
 					if(validMove(world, tempgrid, x - 1, y)) {
-						move(world, tempgrid, WEST);
+						move(world, WEST);
 						success = true;
 					}
 					else {
