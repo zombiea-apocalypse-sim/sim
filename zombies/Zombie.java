@@ -10,6 +10,7 @@ class Zombie extends Tile {
 		super(x, y);
 		this.color = Color.green;
 		this.type = ZOMBIE;
+
 	}
 
 	@Override
