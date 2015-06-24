@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
+/*
+ * World class.
+ * This is where the world update every time tick.
+ * We also create the world here.
+ */
 public class World extends JPanel {
 	Random rand = new Random();
 	int width;
@@ -24,6 +29,12 @@ public class World extends JPanel {
 		createGrid();
 	}
 	
+	/*
+	 * Update method
+	 * We create an extra grid that's the same as our current. This way we
+	 * can make changes on the grid more fair.
+	 * Upper-left corner still has an advantage over the bottom-right corner.
+	 */
 	public void update() {
 		Tile[][] temp = new Tile[width][height];
 		for (int i = 0; i < grid.length; i++) {
@@ -37,6 +48,10 @@ public class World extends JPanel {
 		}
 	}
 	
+	/*
+	 * Create Grid
+	 * Creates a new grid, we start without any humans or zombies
+	 */
 	private void createGrid() {
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
@@ -45,9 +60,13 @@ public class World extends JPanel {
 		}
 		
 		spawnHumans();
-		infectHumans();
+		spawnZombies();
 	}
 	
+	/*
+	 * Spawn Humans
+	 * Spawn humans in the world, this humans can later become zombies
+	 */
 	private void spawnHumans() {
 		int x;
 		int y;
@@ -64,14 +83,18 @@ public class World extends JPanel {
 		}	
 	}
 	
-	private void infectHumans() {
+	/*
+	 * Spawn zombies in the world
+	 * Spawn zombies in the world
+	 */
+	private void spawnZombies() {
 		int x;
 		int y;
 		for(int i = 0; i < amountZombies; i++) {
 			x = rand.nextInt(width);
 			y = rand.nextInt(height);
 			
-			if(grid[x][y].type == Tile.HUMAN) {
+			if(grid[x][y].type == Tile.LAND) {
 				grid[x][y] = new Zombie(x, y);
 			}
 			else {
@@ -80,6 +103,20 @@ public class World extends JPanel {
 		}	
 	}
 	
+	/*
+	 * Infect human
+	 * Infect a human by coordinate
+	 */
+	public void infectHuman(int x, int y) {
+		if(grid[x][y].type == Tile.HUMAN) {
+			grid[x][y] = new Zombie(x, y);
+		}
+	}
+	
+	/*
+	 * Paint Component
+	 * This function renders the grid
+	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for(int y = 0; y < height; y++) {
@@ -90,6 +127,9 @@ public class World extends JPanel {
 		}	
 	}
 	
+	/*
+	 * Getters and Setters
+	 */
 	public void setTileSize(int tileSize) {
 		this.tileSize = tileSize;
 	}

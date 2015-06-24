@@ -10,6 +10,8 @@ public class ZombieSimulator {
 	final static int width = 120;
 	final static int height = 80;
 	final static int tileSize = 10;
+	private static boolean pause = false;
+	
 	
 	/*
 	 * Main Function
@@ -60,7 +62,7 @@ public class ZombieSimulator {
 		
 		/* Create ans setup Menu (extends JPanel) */
 		Menu menu = new Menu();
-		menu.setBounds(200, 200, 800, 400);
+		menu.setBounds(200, 200, windowWidth - 2*200, windowHeight - 2*200);
 		menu.setOpaque(true);
 		menu.setVisible(false);
 		total.add(menu, 1, 0);
@@ -78,15 +80,23 @@ public class ZombieSimulator {
 				if(e.getKeyChar() == 'm') {
 					menu.setVisible(!menu.isVisible());
 				}
+				if(e.getKeyChar() == 'p') {
+					pause = !pause;
+				}
+				if(e.getKeyChar() == 'r') {
+					pause = false;
+					menu.setVisible(false);
+				}
 			}
 		});
 		
 		/* Add timer for updating world state
 		 * Pause the simulation once menu is open
+		 * Heart of the program!
 		 */
 		new javax.swing.Timer(20, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!menu.isVisible()) {
+				if(!menu.isVisible() && !pause) {
 					world.update();
 				}
 				frame.getContentPane().repaint();

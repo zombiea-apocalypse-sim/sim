@@ -42,6 +42,6 @@ public class Menu extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.white);
-		g.fillRect(0, 0, 800, 400);
+		g.fillRect(0, 0, getWidth(), getHeight());
 	}
 }

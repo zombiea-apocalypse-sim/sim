@@ -15,6 +15,6 @@ class Human extends Tile {
 	}
 	
 	public void update(World world, Tile[][] tempgrid) {
-		// Eerst zombie fixxen en dat geen mensen verdwijnen
+		
 	}
 }
