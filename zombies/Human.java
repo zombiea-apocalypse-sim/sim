@@ -7,7 +7,7 @@ import java.util.Random;
 
 class Human extends Tile {
     int direction;
-    int senseRange;
+    int senseRange = 2;
 
     public Human(int x, int y) {
 	super(x, y);
@@ -76,14 +76,41 @@ class Human extends Tile {
 	if(tempgrid[x][y].type != LAND) {
 	    return false;
 	}
-	// rules for seeing zombie
-	if(zombieSpotted(world, tempgrid, x, y)) {
-	    return false;
+
+	if(this.direction == NORTH && y - senseRange >= 0) {
+	    if(zombieSpotted(world, tempgrid, x, y - senseRange)) {
+		return false;
+	    }
+	    
 	}
+ 	if(this.direction == EAST && x + senseRange < world.width) {
+	    if(zombieSpotted(world, tempgrid, x + senseRange, y)) {
+		return false;
+	    }
+
+	}
+	if(this.direction == WEST && x - senseRange >= 0) {
+	    if(zombieSpotted(world, tempgrid, x - senseRange, y)) {
+		return false;
+	    }
+
+	}
+	if(this.direction == SOUTH && y + senseRange < world.height) {
+	    if(zombieSpotted(world, tempgrid, x, y + senseRange)) {
+		return false;
+	    }
+
+	}
+
 	return true;
     }
 
     public boolean zombieSpotted(World world, Tile[][] tempgrid, int x, int y) {
+	Tile xyTile = tempgrid[x][y];
+	String tileType = xyTile.type;
+	if(tileType == ZOMBIE){
+	    return true;
+	}
 	return false;
     }
 }
