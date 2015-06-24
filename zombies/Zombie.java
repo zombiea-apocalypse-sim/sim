@@ -4,7 +4,8 @@ import java.awt.*;
 import java.util.Random;
 
 class Zombie extends Tile {
-
+	private boolean spawnZombie = false;
+	
 	public Zombie(int x, int y) {
 		super(x, y);
 		this.color = Color.green;
@@ -24,25 +25,53 @@ class Zombie extends Tile {
 			switch(dir) {
 				case NORTH:
 					if(validMove(world, tempgrid, x, y - 1)) {
-						success = move(world, tempgrid, NORTH);
+						if(spawnZombie) {
+							world.infectHuman(x, y - 1);
+							spawnZombie = false;
+						}
+						else {
+							move(world, tempgrid, NORTH);
+						}
+						success = true;
 					}
 					break;
 				
 				case EAST:
 					if(validMove(world, tempgrid, x + 1, y)) {
-						success = move(world, tempgrid, EAST);
+						if(spawnZombie) {
+							world.infectHuman(x + 1, y);
+							spawnZombie = false;
+						}
+						else {
+							move(world, tempgrid, EAST);
+						}
+						success = true;
 					}
 					break;
 				
 				case SOUTH:
 					if(validMove(world, tempgrid, x, y + 1)) {
-						success = move(world, tempgrid, SOUTH);
+						if(spawnZombie) {
+							world.infectHuman(x, y + 1);
+							spawnZombie = false;
+						}
+						else {
+							move(world, tempgrid, SOUTH);
+						}
+						success = true;
 					}
 					break;
 				
 				case WEST:
 					if(validMove(world, tempgrid, x - 1, y)) {
-						success = move(world, tempgrid, WEST);
+						if(spawnZombie) {
+							world.infectHuman(x - 1, y);
+							spawnZombie = false;
+						}
+						else {
+							move(world, tempgrid, WEST);
+						}
+						success = true;
 					}
 					break;
 			}
@@ -60,66 +89,18 @@ class Zombie extends Tile {
 		if(y < 0 || y >= world.height) {
 			return false;
 		}
-		if(world.grid[x][y].type != LAND) {
+		if(world.grid[x][y].type == ZOMBIE) {
 			return false;
 		}
-		if(tempgrid[x][y].type != LAND) {
+		if(tempgrid[x][y].type == ZOMBIE) {
 			return false;
 		}
+		
+		//Spawn new Zombie
+		if(world.grid[x][y].type == HUMAN) {
+			spawnZombie = true;
+		}
+		
 		return true;
 	}
-
-// Oud misschien?
-
-// 	private void walkZombie() {
-// 
-// 		Tile possibleTile = findNeighbouringTile(this);
-// 		this.x = possibleTile.x;
-// 		this.y = possibleTile.y;
-// 
-// 	}
-// 
-// 	private Tile findNeighbouringTile(Tile currentTile) {
-// 
-// 		Tile tileNorth = grid[x][y + 1];
-// 		Tile tileSouth = grid[x][y - 1];
-// 		Tile tileEast = grid[x - 1][y];
-// 		Tile tileWest = grid[x + 1][y];
-// 
-// 		int temp = rand.nextInt(4);
-// 		for(int i=0; i<4; i++) {
-// 			int dir = (temp + i) % 4;
-// 			switch (dir) {
-// 				case NORTH:
-// 					if ( tileNorth.color == Color.black || tileNorth.color == Color.pink
-// 							&& inBounderies() )
-// 						return tileNorth;
-// 					break;
-// 
-// 				case SOUTH:
-// 					if ( tileSouth.color == Color.black || tileSouth.color == Color.pink
-// 							&& inBounderies())
-// 						return tileSouth;
-// 					break;
-// 				case EAST:
-// 					if ( tileEast.color == Color.black || tileEast.color == Color.pink
-// 							&& inBounderies())
-// 						return tileEast;
-// 					break;
-// 				case WEST:
-// 					if ( tileWest.color == Color.black || tileWest.color == Color.pink
-// 							&& inBounderies() )
-// 						return tileWest;
-// 					break;
-// 			}
-// 
-// 		}
-// 
-// 		return currentTile;
-// 	}
-// 
-// 	private boolean inBounderies() {
-// 		if ()
-// 	}
-
 }
