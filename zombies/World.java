@@ -16,6 +16,7 @@ public class World extends JPanel {
 	int tileSize;
 	int amountHumans;
 	int amountZombies;
+	boolean flip = false;
 	Tile[][] grid;
 	
 	public World(int width, int height, int amountHumans, int amountZombies) {
@@ -41,10 +42,21 @@ public class World extends JPanel {
 			System.arraycopy(grid[i], 0, temp[i], 0, grid[i].length);
 		}
 		
-		for(int y = 0; y < height; y++) {
-			for(int x = 0; x < width; x++) {
-				temp[x][y].update(this, temp);
+		if(flip) {
+			for(int y = 0; y < height; y++) {
+				for(int x = 0; x < width; x++) {
+					temp[x][y].update(this, temp);
+				}
 			}
+			flip = false;
+		}
+		else {
+			for(int y = height - 1; y > 0; y--) {
+				for(int x = width - 1; x > 0; x--) {
+					temp[x][y].update(this, temp);
+				}
+			}
+			flip = true;
 		}
 	}
 	
@@ -112,8 +124,6 @@ public class World extends JPanel {
 			grid[x][y] = new Zombie(x, y);
 		}
 	}
-	
-	
 	
 	/*
 	 * Paint Component
