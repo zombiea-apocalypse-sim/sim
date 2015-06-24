@@ -27,39 +27,38 @@ class Human extends Tile {
 		if(validMove(world, tempgrid, x, y - 1)) {
 		    success = move(world, tempgrid, NORTH);
 		} else {
-			this.direction = EAST;
-		    }
-		    break;
-	
-		case EAST:
-		    if(validMove(world, tempgrid, x + 1, y)) {
-			success = move(world, tempgrid, EAST);
-		    } else {
-			this.direction = SOUTH;
-		    }
-		    break;
-	
-		case SOUTH:
-		    if(validMove(world, tempgrid, x, y + 1)) {
-			success = move(world, tempgrid, SOUTH);
-		    } else {
-			this.direction = WEST;
-		    }
-		    break;
-			
-		case WEST:
-		    if(validMove(world, tempgrid, x - 1, y)) {
-			success = move(world, tempgrid, WEST);
-		    } else {
-			this.direction = NORTH;
-		    }
-		    break;
+		    this.direction = EAST;
 		}
+		break;
+	    case EAST:
+		if(validMove(world, tempgrid, x + 1, y)) {
+		    success = move(world, tempgrid, EAST);
+		} else {
+		    this.direction = SOUTH;
+		}
+		break;
+
+	    case SOUTH:
+		if(validMove(world, tempgrid, x, y + 1)) {
+		    success = move(world, tempgrid, SOUTH);
+		} else {
+		    this.direction = WEST;
+		}
+		break;
 		
-		if(success) {
-		    break;
+	    case WEST:
+		if(validMove(world, tempgrid, x - 1, y)) {
+		    success = move(world, tempgrid, WEST);
+		} else {
+		    this.direction = NORTH;
 		}
-	    
+		break;
+	    }
+	
+	    if(success) {
+		break;
+	    }
+   
 	}
     }
    
@@ -78,26 +77,37 @@ class Human extends Tile {
 	}
 
 	if(this.direction == NORTH && y - senseRange >= 0) {
-	    if(zombieSpotted(world, tempgrid, x, y - senseRange)) {
-		return false;
-	    }
-	    
+	    for(int i = 1; i <= senseRange; i ++) {
+		if(zombieSpotted(world, tempgrid, x, y - i)) {
+		    return false;
+		}
+		
+	    }	    
 	}
  	if(this.direction == EAST && x + senseRange < world.width) {
-	    if(zombieSpotted(world, tempgrid, x + senseRange, y)) {
-		return false;
+	    for(int i = 1; i <= senseRange; i ++) {
+		if(zombieSpotted(world, tempgrid, x + i, y)) {
+		    return false;
+		}
+		
 	    }
 
 	}
 	if(this.direction == WEST && x - senseRange >= 0) {
-	    if(zombieSpotted(world, tempgrid, x - senseRange, y)) {
-		return false;
+	    for(int i = 1; i <= senseRange; i ++) {
+		if(zombieSpotted(world, tempgrid, x - i, y)) {
+		    return false;
+		}
+		
 	    }
 
 	}
+ 
 	if(this.direction == SOUTH && y + senseRange < world.height) {
-	    if(zombieSpotted(world, tempgrid, x, y + senseRange)) {
-		return false;
+	    for(int i = 1; i <= senseRange; i ++) {
+		if(zombieSpotted(world, tempgrid, x, y + i)) {
+		    return false;
+		}		
 	    }
 
 	}
