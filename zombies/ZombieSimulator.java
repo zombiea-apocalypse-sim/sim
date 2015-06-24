@@ -4,8 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Renderer {
+public class ZombieSimulator {
+	/* Simulator constants */
 	final static int windowBarHeight = 22;
+	final static int width = 120;
+	final static int height = 80;
+	final static int tileSize = 10;
 	
 	/*
 	 * Main Function
@@ -24,31 +28,44 @@ public class Renderer {
 	}
 	
 	/* 
-	 * Init the window with the GUI
+	 * Init the window with the GUI.
 	 */
 	private static void initWindow() {
-		/* Create and set up the window. */
+		/* Create and set up the window (JFrame). */
+		int windowWidth = width * tileSize;
+		int windowHeight = height * tileSize;
+		
 		JFrame frame = new JFrame("Zombie Simulator 2015");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		frame.setSize(windowWidth, windowHeight + windowBarHeight);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dim.getWidth() - frame.getWidth()) / 2);
+		int y = (int) ((dim.getHeight() - frame.getHeight()) / 2);
+		frame.setLocation(x, y);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		
+		/* We create a JLayeredPane to draw our Menu on top of our World */
 		JLayeredPane total = new JLayeredPane();
 		frame.add(total, BorderLayout.CENTER);
 		
-		/* Set location and size of the window */
-		int width = 120;
-		int height = 80;
-		World world = new World(width, height);
+		/* Create ans setup World (extends JPanel) */
+		World world = new World(width, height, width*height/8, 10);
 		
-		world.setBounds(0, 0, width*world.tile_size, height*world.tile_size);
+		world.setTileSize(tileSize);
+		world.setBounds(0, 0, windowWidth, windowHeight);
 		world.setOpaque(true);
 		total.add(world, 0, 0);
 		
+		/* Create ans setup Menu (extends JPanel) */
 		Menu menu = new Menu();
 		menu.setBounds(200, 200, 800, 400);
 		menu.setOpaque(true);
 		menu.setVisible(false);
 		total.add(menu, 1, 0);
 		
+		/* Add keylistener for opening and closing menu */
 		frame.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {}
@@ -64,18 +81,14 @@ public class Renderer {
 			}
 		});
 		
-		frame.setSize(1200, 800 + windowBarHeight);
-		frame.setResizable(false);
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
-		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
-		frame.setLocation(x, y);
-		
-		frame.setVisible(true);
-		
+		/* Add timer for updating world state
+		 * Pause the simulation once menu is open
+		 */
 		new javax.swing.Timer(20, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				world.update();
+				if(!menu.isVisible()) {
+					world.update();
+				}
 				frame.getContentPane().repaint();
         	}
 		}).start();
