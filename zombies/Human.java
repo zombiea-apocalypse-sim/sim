@@ -6,6 +6,7 @@ import java.util.Random;
 
 class Human extends Tile {
 	int senseRange = 2;
+  int clusterSize = 3;
 	public Human(int x, int y) {
 	  super(x, y);
 	  Random rand = new Random();
@@ -132,32 +133,42 @@ class Human extends Tile {
 			}
 		}
 	}
-	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
-		if(x < 0 || x >= world.width) {
-			return false;
-		}
-
-		if(y < 0 || y >= world.height) {
-			return false;
-		}
-
-		if(world.grid[x][y].type != LAND) {
-			return false;
-		}
 
   public boolean humanNear(World world, Tile[][] tempgrid, int x, int y) {
+      int counter = 0;
+      boolean returnBool = false;
       if(objectSpotted(world, tempgrid, x, y - 1, HUMAN)) {
-		    return true;
+        counter += 1;
 		  }
 		  if(objectSpotted(world, tempgrid, x + 1, y, HUMAN)) {
-        return true;
+        counter += 1;
 		  }
 		  if(objectSpotted(world, tempgrid, x - 1, y, HUMAN)) {
-		    return true;
+        counter += 1;
 		  }
       if(objectSpotted(world, tempgrid, x, y + 1, HUMAN)) {
-		    return true;
+        counter += 1;
       }
-      return false;
+
+      if(objectSpotted(world, tempgrid, x + 1, y + 1, HUMAN)) {
+        counter += 1;
+      }
+      if(objectSpotted(world, tempgrid, x + 1, y - 1, HUMAN)) {
+        counter += 1;
+      }
+      if(objectSpotted(world, tempgrid, x - 1 , y + 1, HUMAN)) {
+        counter += 1;
+      }
+      if(objectSpotted(world, tempgrid, x - 1, y - 1, HUMAN)) {
+        counter += 1;
+      }
+
+      if(counter >= clusterSize) {
+        returnBool = true;
+        this.color = Color.red;
+      } else {
+        this.color = Color.pink;
+      }
+      return returnBool;
   }
 }
