@@ -28,7 +28,7 @@ class Tile {
 	
 	public void update(World world, Tile[][] tempgrid) {}
 	
-	public boolean move(World world, Tile[][] tempgrid, int dir) {
+	public void move(World world, Tile[][] tempgrid, int dir) {
 		int new_x = this.x;
 		int new_y = this.y;
 		
@@ -54,10 +54,15 @@ class Tile {
 		world.grid[this.x][this.y] = new Tile(this.x, this.y);
 		this.x = new_x;
 		this.y = new_y;
-		
-		return true;
 	}
-
+	
+	/*
+	 * Calculate manhattan distance from current to end position
+	 */
+	public int manhattanDistance(int endX, int endY) {
+		return Math.abs(this.x - endX) + Math.abs(this.y - endY);
+	}
+	
 // Overbodig?
 //     public boolean frontIsClear(Tile[][] grid, int xCo,	int yCo,int dir) {
 // 		int destinationX;
