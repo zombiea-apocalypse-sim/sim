@@ -22,22 +22,6 @@ public class World extends JPanel {
 		this.grid = new Tile[width][height];
 		
 		createGrid();
-		
-// 		for(int y = 0; y < height; y++) {
-// 			for(int x = 0; x < width; x++) {
-// 				switch(rand.nextInt(50) % 3) {
-// 					case 0:
-// 						grid[x][y] = new Human(x, y);
-// 						break;
-// 					case 1:
-// 						grid[x][y] = new Zombie(x, y);
-// 						break;
-// 					default:
-// 						grid[x][y] = new Tile(x, y);
-// 						break;
-// 				}
-// 			}
-// 		}
 	}
 	
 	public void update() {

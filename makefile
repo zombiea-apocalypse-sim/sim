@@ -1,7 +1,11 @@
 
 run:
-	java zombies.Renderer
+	java zombies.ZombieSimulator
 
 all:
+	rm -f zombies/*.class
 	javac zombies/*.java
-	java zombies.Renderer
+	java zombies.ZombieSimulator
+
+clean:
+	rm -f zombies/*.class
