@@ -64,7 +64,7 @@ public class World extends JPanel {
 	 * Create Grid
 	 * Creates a new grid, we start without any humans or zombies
 	 */
-	private void createGrid() {
+	public void createGrid() {
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
 				grid[x][y] = new Tile(x, y);
@@ -144,5 +144,13 @@ public class World extends JPanel {
 	 */
 	public void setTileSize(int tileSize) {
 		this.tileSize = tileSize;
+	}
+	
+	public void setAmountHumans(int amountHumans) {
+		this.amountHumans = amountHumans;
+	}
+	
+	public void setAmountZombies(int amountZombies) {
+		this.amountZombies = amountZombies;
 	}
 }

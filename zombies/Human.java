@@ -70,10 +70,8 @@ class Human extends Tile {
 				break;
 			}
 		}
-}
-   
-
-
+	}
+	
 	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
 		if(x < 0 || x >= world.width) {
 			return false;
