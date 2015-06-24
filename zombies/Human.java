@@ -131,7 +131,19 @@ class Human extends Tile {
 				break;
 			}
 		}
-  }
+	}
+	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
+		if(x < 0 || x >= world.width) {
+			return false;
+		}
+
+		if(y < 0 || y >= world.height) {
+			return false;
+		}
+
+		if(world.grid[x][y].type != LAND) {
+			return false;
+		}
 
   public boolean humanNear(World world, Tile[][] tempgrid, int x, int y) {
       if(objectSpotted(world, tempgrid, x, y - 1, HUMAN)) {
