@@ -119,9 +119,9 @@ class Human extends Tile {
       		if(zombieSpotted(world, tempgrid, x, y + i)) {
 		      return false;
       		}		
-	  }
-    return true;
+	    }
     }
+    return true;
 }
 	public boolean zombieSpotted(World world, Tile[][] tempgrid, int x, int y) {
 		Tile xyTile = tempgrid[x][y];
