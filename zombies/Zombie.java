@@ -4,11 +4,12 @@ import java.awt.*;
 import java.util.Random;
 
 class Zombie extends Tile {
-	
+
 	public Zombie(int x, int y) {
 		super(x, y);
 		this.color = Color.green;
 		this.type = ZOMBIE;
+
 	}
 
 	@Override
