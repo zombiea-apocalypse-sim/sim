@@ -17,7 +17,9 @@ class Human extends Tile {
 	}
 
 	public void update(World world, Tile[][] tempgrid) {
-		int dir;
+	  Random rand = new Random();
+    this.direction = rand.nextInt(4);
+		int dir = this.direction;
 		boolean success = false;
 		
 		for(int i = 0; i < 4; i++) {
@@ -68,51 +70,61 @@ class Human extends Tile {
 				break;
 			}
 		}
-	}
+}
    
+
 
 	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
 		if(x < 0 || x >= world.width) {
 			return false;
 		}
+
 		if(y < 0 || y >= world.height) {
 			return false;
 		}
+
 		if(world.grid[x][y].type != LAND) {
 			return false;
 		}
+
 		if(tempgrid[x][y].type != LAND) {
 			return false;
 		}
 
-		if(this.direction == NORTH && y - senseRange >= 0) {
-			if(zombieSpotted(world, tempgrid, x, y - senseRange)) {
-				return false;
-			}
+	  if(this.direction == NORTH && y - senseRange >= 0) {
+	    for(int i = 1; i <= senseRange; i ++) {
+		    if(zombieSpotted(world, tempgrid, x, y - i)) {
+		      return false;
+		    }
 		
-		}
-		if(this.direction == EAST && x + senseRange < world.width) {
-			if(zombieSpotted(world, tempgrid, x + senseRange, y)) {
-				return false;
-			}
+	    }	    
+	  }
 
-		}
-		if(this.direction == WEST && x - senseRange >= 0) {
-			if(zombieSpotted(world, tempgrid, x - senseRange, y)) {
-				return false;
-			}
+ 	  if(this.direction == EAST && x + senseRange < world.width) {
+	    for(int i = 1; i <= senseRange; i ++) {
+		    if(zombieSpotted(world, tempgrid, x + i, y)) {
+		        return false;
+		    }		
+	    }
+	  }
 
-		}
-		if(this.direction == SOUTH && y + senseRange < world.height) {
-			if(zombieSpotted(world, tempgrid, x, y + senseRange)) {
-				return false;
-			}
-
-		}
-
-		return true;
-	}
-
+	  if(this.direction == WEST && x - senseRange >= 0) {
+	    for(int i = 1; i <= senseRange; i ++) {
+		    if(zombieSpotted(world, tempgrid, x - i, y)) {
+		      return false;
+		    }
+	    }
+	  }
+ 
+	  if(this.direction == SOUTH && y + senseRange < world.height) {
+      for(int i = 1; i <= senseRange; i ++) {
+      		if(zombieSpotted(world, tempgrid, x, y + i)) {
+		      return false;
+      		}		
+	    }
+    }
+    return true;
+}
 	public boolean zombieSpotted(World world, Tile[][] tempgrid, int x, int y) {
 		Tile xyTile = tempgrid[x][y];
 		String tileType = xyTile.type;
