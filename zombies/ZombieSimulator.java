@@ -3,6 +3,7 @@ package zombies;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 
 public class ZombieSimulator {
 	/* Simulator constants */
@@ -41,6 +42,10 @@ public class ZombieSimulator {
 
 		JFrame frame = new JFrame("Zombie Simulator 2015");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        URL iconURL = ZombieSimulator.class.getResource("resources/zombie-icon.png");
+        ImageIcon icon = new ImageIcon(iconURL);
+        frame.setIconImage(icon.getImage());
 
 		frame.setSize(windowWidth, windowHeight + windowBarHeight);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
