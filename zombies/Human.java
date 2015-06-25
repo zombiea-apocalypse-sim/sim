@@ -15,8 +15,47 @@ class Human extends Tile {
 	this.type = HUMAN;
 	direction = rand.nextInt(4);
 	}
-
+	
+	@Override
 	public void update(World world, Tile[][] tempgrid) {
+		int startX = this.x - 1;
+		int startY = this.y - 1;
+		int endX = this.x + 1;
+		int endY = this.y + 1;
+		
+		int zombies = 0;
+		int humans = 0;
+		
+		if(startX < 0) {
+			startX = 0;
+		}
+		if(startY < 0) {
+			startY = 0;
+		}
+		if(endX > world.width) {
+			endX = world.width;
+		}
+		if(endY > world.height) {
+			endY = world.height;
+		}
+		
+		for(int y = startY; y < endY; y++) {
+			for(int x = startX; x < endX; x++) {
+				if(tempgrid[x][y].type == HUMAN) {
+					humans++;
+				}
+				else if(tempgrid[x][y].type == ZOMBIE) {
+					zombies++;
+				}
+			}
+		}
+		
+		if(zombies >= humans) {
+			world.grid[this.x][this.y] = new Zombie(this.x, this.y);
+		}
+	}
+
+	public void update1(World world, Tile[][] tempgrid) {
 	  Random rand = new Random();
     this.direction = rand.nextInt(4);
 		int dir = this.direction;

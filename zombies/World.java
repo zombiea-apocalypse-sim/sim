@@ -34,7 +34,8 @@ public class World extends JPanel {
 	 * Update method
 	 * We create an extra grid that's the same as our current. This way we
 	 * can make changes on the grid more fair.
-	 * Upper-left corner still has an advantage over the bottom-right corner.
+	 * Upper-left corner still has an advantage over the bottom-right corner, but
+	 * we cancel this out by flipping our iteration.
 	 */
 	public void update() {
 		Tile[][] temp = new Tile[width][height];
@@ -42,21 +43,31 @@ public class World extends JPanel {
 			System.arraycopy(grid[i], 0, temp[i], 0, grid[i].length);
 		}
 		
+		// Move zombies and humans
 		if(flip) {
 			for(int y = 0; y < height; y++) {
 				for(int x = 0; x < width; x++) {
-					temp[x][y].update(this, temp);
+					temp[x][y].update1(this, temp);
 				}
 			}
-			flip = false;
 		}
 		else {
 			for(int y = height - 1; y > 0; y--) {
 				for(int x = width - 1; x > 0; x--) {
-					temp[x][y].update(this, temp);
+					temp[x][y].update1(this, temp);
 				}
 			}
-			flip = true;
+		}
+		flip = !flip;
+		
+		// Update humans->zombies and zombies->death
+		for (int i = 0; i < grid.length; i++) {
+			System.arraycopy(grid[i], 0, temp[i], 0, grid[i].length);
+		}
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				temp[x][y].update(this, temp);
+			}
 		}
 	}
 	

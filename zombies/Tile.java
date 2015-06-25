@@ -27,6 +27,7 @@ class Tile {
 	}
 	
 	public void update(World world, Tile[][] tempgrid) {}
+	public void update1(World world, Tile[][] tempgrid) {}
 	
 	public void move(World world, Tile[][] tempgrid, int dir) {
 		int new_x = this.x;
