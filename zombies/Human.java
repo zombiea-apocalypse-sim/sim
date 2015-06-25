@@ -5,7 +5,7 @@ import java.util.Random;
 
 class Human extends Tile {
 	int senseRange = 2;
-	int clusterSize = 3;
+	int clusterSize = 4;
 
 	public Human(int x, int y) {
 		super(x, y);
