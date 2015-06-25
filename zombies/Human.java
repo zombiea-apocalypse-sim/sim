@@ -9,11 +9,13 @@ class Human extends Tile {
 
 	public Human(int x, int y) {
 		super(x, y);
-		Random rand = new Random();
 		this.color = Color.pink;
 		this.type = HUMAN;
 	}
 
+	/*
+	 * Update tile
+	 */
 	@Override
 	public void update(World world, Tile[][] oldgrid) {
 		int startX = this.x - 1;
@@ -53,12 +55,18 @@ class Human extends Tile {
 		}
 	}
 
+	/*
+	 * Randomly move when no other humans are near
+	 */
 	public void move(World world, Tile[][] tempgrid) {
 		if (!humanNear(world, tempgrid)) {
 			randomMove(world, tempgrid);
 		}
 	}
 
+	/*
+	 * Returns true if a position is on the grid
+	 */
 	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
 		if (x < 0 || x >= world.width) {
 			return false;
@@ -116,6 +124,9 @@ class Human extends Tile {
 		return false;
 	}
 
+	/*
+	 * Does a random move
+	 */
 	private void randomMove(World world, Tile[][] tempgrid) {
 		Random rand = new Random();
 		int temp = rand.nextInt(4);
@@ -161,6 +172,9 @@ class Human extends Tile {
 		}
 	}
 
+	/*
+	 * Returns true when human is near a cluster
+	 */
 	public boolean humanNear(World world, Tile[][] tempgrid) {
 		int counter = 0;
 		boolean returnBool = false;
@@ -176,7 +190,6 @@ class Human extends Tile {
 		if (objectSpotted(world, tempgrid, x, y + 1, HUMAN)) {
 			counter += 1;
 		}
-
 		if (objectSpotted(world, tempgrid, x + 1, y + 1, HUMAN)) {
 			counter += 1;
 		}
