@@ -5,7 +5,7 @@ import java.util.Random;
 
 class Human extends Tile {
 	int senseRange = 2;
-	int clusterSize = 3;
+	int clusterSize = 4;
 
 	public Human(int x, int y) {
 		super(x, y);
@@ -65,7 +65,8 @@ class Human extends Tile {
 	}
 
 	/*
-	 * Returns true if a position is on the grid
+	 * Returns true if a moving would not result in being on a position 
+	 * outside the grid, or if it would result in being closer to a zombie
 	 */
 	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
 	    if (x < 0 || x >= world.width) {
@@ -169,36 +170,30 @@ class Human extends Tile {
 	}
 
 	/*
-	 * Returns true when human is near a cluster
+	 * Returns true when human is near another human
 	 */
 	public boolean humanNear(World world, Tile[][] tempgrid) {
 		int counter = 0;
 		boolean returnBool = false;
-		if (objectSpotted(world, tempgrid, x, y - 1, HUMAN)) {
-			counter += 1;
+		for (int i = 1; i <= 1; i++) {
+		    for(int j = 1; j >= 0; j--) {
+                if (objectSpotted(world, tempgrid, x - j, y-i, HUMAN)) {
+		    counter += 1;
+                }
+                
+                if (objectSpotted(world, tempgrid, x + j, y+i, HUMAN)) {
+		    counter += 1;
+                }
+                
+                if (objectSpotted(world, tempgrid, x - i, y+j, HUMAN)) {
+		    counter += 1;
+                }
+                
+                if (objectSpotted(world, tempgrid, x + i, y-j, HUMAN)) {
+		    counter += 1;
+                }
+		    }
 		}
-		if (objectSpotted(world, tempgrid, x + 1, y, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x - 1, y, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x, y + 1, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x + 1, y + 1, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x + 1, y - 1, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x - 1, y + 1, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x - 1, y - 1, HUMAN)) {
-			counter += 1;
-		}
-
 		if (counter >= clusterSize) {
 			returnBool = true;
 			this.color = Color.red;
