@@ -87,6 +87,9 @@ public class ZombieSimulator {
 					pause = false;
 					menu.setVisible(false);
 				}
+				if(e.getKeyChar() == 'n') {
+					world.createGrid();
+				}
 			}
 		});
 		

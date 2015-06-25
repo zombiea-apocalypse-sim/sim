@@ -5,23 +5,22 @@ import java.awt.*;
 import java.util.Random;
 
 class Human extends Tile {
-	int direction;
 	int senseRange = 2;
-
+	int clusterSize = 3;
+	
 	public Human(int x, int y) {
-	super(x, y);
-	Random rand = new Random();
-	this.color = Color.pink;
-	this.type = HUMAN;
-	direction = rand.nextInt(4);
+		super(x, y);
+		Random rand = new Random();
+		this.color = Color.pink;
+		this.type = HUMAN;
 	}
 	
 	@Override
-	public void update(World world, Tile[][] tempgrid) {
+	public void update(World world, Tile[][] oldgrid) {
 		int startX = this.x - 1;
 		int startY = this.y - 1;
-		int endX = this.x + 1;
-		int endY = this.y + 1;
+		int endX = this.x + 2;
+		int endY = this.y + 2;
 		
 		int zombies = 0;
 		int humans = 0;
@@ -39,12 +38,12 @@ class Human extends Tile {
 			endY = world.height;
 		}
 		
-		for(int y = startY; y < endY; y++) {
-			for(int x = startX; x < endX; x++) {
-				if(tempgrid[x][y].type == HUMAN) {
+		for(int iy = startY; iy < endY; iy++) {
+			for(int ix = startX; ix < endX; ix++) {
+				if(oldgrid[ix][iy].type == HUMAN) {
 					humans++;
 				}
-				else if(tempgrid[x][y].type == ZOMBIE) {
+				if(oldgrid[ix][iy].type == ZOMBIE) {
 					zombies++;
 				}
 			}
@@ -55,62 +54,12 @@ class Human extends Tile {
 		}
 	}
 
-	public void update1(World world, Tile[][] tempgrid) {
-	  Random rand = new Random();
-    this.direction = rand.nextInt(4);
-		int dir = this.direction;
-		boolean success = false;
-		
-		for(int i = 0; i < 4; i++) {
-			dir = this.direction;
-			switch(dir) {
-				case NORTH:
-					if(validMove(world, tempgrid, x, y - 1)) {
-						move(world, tempgrid, NORTH);
-						success = true;
-					}
-					else {
-						this.direction = EAST;
-					}
-					break;
-	
-				case EAST:
-					if(validMove(world, tempgrid, x + 1, y)) {
-						move(world, tempgrid, EAST);
-						success = true;
-					}
-					else {
-						this.direction = SOUTH;
-					}
-					break;
-	
-				case SOUTH:
-					if(validMove(world, tempgrid, x, y + 1)) {
-						move(world, tempgrid, SOUTH);
-						success = true;
-					}
-					else {
-						this.direction = WEST;
-					}
-					break;
-			
-				case WEST:
-					if(validMove(world, tempgrid, x - 1, y)) {
-						move(world, tempgrid, WEST);
-						success = true;
-					}
-					else {
-						this.direction = NORTH;
-					}
-					break;
-			}
-		
-			if(success) {
-				break;
-			}
+	public void move(World world, Tile[][] tempgrid) {
+		if(!humanNear(world, tempgrid)) {
+			randomMove(world, tempgrid);
 		}
 	}
-	
+	 
 	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
 		if(x < 0 || x >= world.width) {
 			return false;
@@ -128,46 +77,126 @@ class Human extends Tile {
 			return false;
 		}
 
-	  if(this.direction == NORTH && y - senseRange >= 0) {
-	    for(int i = 1; i <= senseRange; i ++) {
-		    if(zombieSpotted(world, tempgrid, x, y - i)) {
-		      return false;
-		    }
-		
-	    }	    
-	  }
+		for(int i = 1; i <= senseRange; i ++) {
+			if(objectSpotted(world, tempgrid, x, y - i, ZOMBIE)) {
+				return false;
+			}
+		}
 
- 	  if(this.direction == EAST && x + senseRange < world.width) {
-	    for(int i = 1; i <= senseRange; i ++) {
-		    if(zombieSpotted(world, tempgrid, x + i, y)) {
-		        return false;
-		    }		
-	    }
-	  }
+		for(int i = 1; i <= senseRange; i ++) {
+			if(objectSpotted(world, tempgrid, x + i, y, ZOMBIE)) {
+				return false;
+			}		
+		}
 
-	  if(this.direction == WEST && x - senseRange >= 0) {
-	    for(int i = 1; i <= senseRange; i ++) {
-		    if(zombieSpotted(world, tempgrid, x - i, y)) {
-		      return false;
-		    }
-	    }
-	  }
+		for(int i = 1; i <= senseRange; i ++) {
+			if(objectSpotted(world, tempgrid, x - i, y, ZOMBIE)) {
+				return false;
+			}
+		}
  
-	  if(this.direction == SOUTH && y + senseRange < world.height) {
-      for(int i = 1; i <= senseRange; i ++) {
-      		if(zombieSpotted(world, tempgrid, x, y + i)) {
-		      return false;
-      		}		
-	    }
-    }
-    return true;
-}
-	public boolean zombieSpotted(World world, Tile[][] tempgrid, int x, int y) {
-		Tile xyTile = tempgrid[x][y];
+		for(int i = 1; i <= senseRange; i ++) {
+			if(objectSpotted(world, tempgrid, x, y + i, ZOMBIE)) {
+				return false;
+			}		
+		}
+		return true;
+	}
+	
+	public boolean objectSpotted(World world, Tile[][] tempgrid, int xCo, int yCo, String object) {
+		if(xCo <= 0 || xCo >= world.width || yCo <= 0 || yCo >= world.height) {
+			return false;
+		}
+
+		Tile xyTile = tempgrid[xCo][yCo];
 		String tileType = xyTile.type;
-		if(tileType == ZOMBIE){
+		if(tileType == object){
 			return true;
 		}
+
 		return false;
+	}
+
+	private void randomMove(World world, Tile[][] tempgrid) {
+		Random rand = new Random();
+		int temp = rand.nextInt(4);
+		boolean success = false;
+		int dir;
+		
+		for(int i = 0; i < 4; i++) {
+			dir = (temp + i) % 4;
+
+			switch(dir) {
+				case NORTH:
+					if(validMove(world, tempgrid, x, y - 1)) {
+						moveInDir(world, NORTH);
+						success = true;
+					}
+					break;
+				
+				case EAST:
+					if(validMove(world, tempgrid, x + 1, y)) {
+						moveInDir(world, EAST);
+						success = true;
+					}
+					break;
+				
+				case SOUTH:
+					if(validMove(world, tempgrid, x, y + 1)) {
+						moveInDir(world, SOUTH);
+						success = true;
+					}
+					break;
+				
+				case WEST:
+					if(validMove(world, tempgrid, x - 1, y)) {
+						moveInDir(world, WEST);
+						success = true;
+					}
+					break;
+			}
+			
+			if(success) {
+				break;
+			}
+		}
+	}
+
+	public boolean humanNear(World world, Tile[][] tempgrid) {
+		int counter = 0;
+		boolean returnBool = false;
+		if(objectSpotted(world, tempgrid, x, y - 1, HUMAN)) {
+			counter += 1;
+		}
+		if(objectSpotted(world, tempgrid, x + 1, y, HUMAN)) {
+			counter += 1;
+		}
+		if(objectSpotted(world, tempgrid, x - 1, y, HUMAN)) {
+			counter += 1;
+		}
+		if(objectSpotted(world, tempgrid, x, y + 1, HUMAN)) {
+			counter += 1;
+		}
+
+		if(objectSpotted(world, tempgrid, x + 1, y + 1, HUMAN)) {
+			counter += 1;
+		}
+		if(objectSpotted(world, tempgrid, x + 1, y - 1, HUMAN)) {
+			counter += 1;
+		}
+		if(objectSpotted(world, tempgrid, x - 1 , y + 1, HUMAN)) {
+			counter += 1;
+		}
+		if(objectSpotted(world, tempgrid, x - 1, y - 1, HUMAN)) {
+			counter += 1;
+		}
+
+		if(counter >= clusterSize) {
+			returnBool = true;
+			this.color = Color.red;
+		} else {
+			this.color = Color.pink;
+		}
+		return returnBool;
 	}
 }

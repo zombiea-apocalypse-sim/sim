@@ -18,7 +18,7 @@ public class World extends JPanel {
 	int amountZombies;
 	boolean flip = false;
 	Tile[][] grid;
-	
+		
 	public World(int width, int height, int amountHumans, int amountZombies) {
 		this.width = width;
 		this.height = height;
@@ -47,14 +47,14 @@ public class World extends JPanel {
 		if(flip) {
 			for(int y = 0; y < height; y++) {
 				for(int x = 0; x < width; x++) {
-					temp[x][y].update1(this, temp);
+					temp[x][y].move(this, temp);
 				}
 			}
 		}
 		else {
 			for(int y = height - 1; y > 0; y--) {
 				for(int x = width - 1; x > 0; x--) {
-					temp[x][y].update1(this, temp);
+					temp[x][y].move(this, temp);
 				}
 			}
 		}
@@ -93,6 +93,7 @@ public class World extends JPanel {
 	private void spawnHumans() {
 		int x;
 		int y;
+		
 		for(int i = 0; i < amountHumans; i++) {
 			x = rand.nextInt(width);
 			y = rand.nextInt(height);
@@ -107,7 +108,6 @@ public class World extends JPanel {
 	}
 	
 	/*
-	 * Spawn zombies in the world
 	 * Spawn zombies in the world
 	 */
 	private void spawnZombies() {
