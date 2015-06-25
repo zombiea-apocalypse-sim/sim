@@ -22,7 +22,7 @@ public class Menu extends JPanel {
 
 		this.add(Box.createRigidArea(new Dimension(0, 15)));
 
-		JLabel zombieCountLabel = new JLabel("Amount of zombies: " + 10);
+		JLabel zombieCountLabel = new JLabel("Amount of zombies: ");
 		this.add(zombieCountLabel);
 
 		zombieCount = new JSlider(5, 100);
@@ -33,7 +33,6 @@ public class Menu extends JPanel {
 						+ zombieCount.getValue());
 			}
 		});
-		zombieCount.setLayout(null);
 		zombieCount.setMajorTickSpacing(5);
 		zombieCount.setPaintTicks(true);
 		zombieCount.setSize(200, 200);
@@ -56,8 +55,6 @@ public class Menu extends JPanel {
 						+ humanCount.getValue());
 			}
 		});
-		zombieCount.setName("HUMANSLIDER");
-		humanCount.setLayout(null);
 		humanCount.setMajorTickSpacing(50);
 		humanCount.setPaintTicks(true);
 		humanCount.setSize(200, 200);
