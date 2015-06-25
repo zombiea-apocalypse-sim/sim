@@ -206,7 +206,7 @@ class Zombie extends Tile {
 	 * from the closest tiles.
 	 */
 	public Tile findClosestHuman(World world, Tile[][] tempgrid) {
-		ArrayList<Tile> humanTiles = getNeighbourHumans(world, tempgrid, 5);
+		ArrayList<Tile> humanTiles = getNeighbourHumans(world, tempgrid, 3);
 
 		int smallestDistance = 99999;
 

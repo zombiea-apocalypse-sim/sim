@@ -11,8 +11,7 @@ public class ZombieSimulator {
 	final static int height = 80;
 	final static int tileSize = 10;
 	private static boolean pause = false;
-
-
+	
 	/*
 	 * Main Function
 	 */
