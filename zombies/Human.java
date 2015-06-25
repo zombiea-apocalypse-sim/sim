@@ -68,46 +68,42 @@ class Human extends Tile {
 	 * Returns true if a position is on the grid
 	 */
 	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
-		if (x < 0 || x >= world.width) {
+	    if (x < 0 || x >= world.width) {
+		return false;
+	    }
+
+	    if (y < 0 || y >= world.height) {
+		return false;
+	    }
+
+	    if (world.grid[x][y].type != LAND) {
+		return false;
+	    }
+
+	    if (tempgrid[x][y].type != LAND) {
+		return false;
+	    }
+
+	    for (int i = 1; i <= senseRange; i++) {
+		for(int j = senseRange; j >= 0; j--) {
+		    if (objectSpotted(world, tempgrid, x - j, y-i, ZOMBIE)) {
 			return false;
-		}
-
-		if (y < 0 || y >= world.height) {
-			return false;
-		}
-
-		if (world.grid[x][y].type != LAND) {
-			return false;
-		}
-
-		if (tempgrid[x][y].type != LAND) {
-			return false;
-		}
-
-		for (int i = 1; i <= senseRange; i++) {
-			if (objectSpotted(world, tempgrid, x, y - i, ZOMBIE)) {
-				return false;
-			}
-		}
-
-		for (int i = 1; i <= senseRange; i++) {
-			if (objectSpotted(world, tempgrid, x + i, y, ZOMBIE)) {
-				return false;
-			}
-		}
-
-		for (int i = 1; i <= senseRange; i++) {
-			if (objectSpotted(world, tempgrid, x - i, y, ZOMBIE)) {
-				return false;
-			}
-		}
-
-		for (int i = 1; i <= senseRange; i++) {
-			if (objectSpotted(world, tempgrid, x, y + i, ZOMBIE)) {
-				return false;
-			}
-		}
-		return true;
+		    }
+	    
+                if (objectSpotted(world, tempgrid, x + j, y+i, ZOMBIE)) {
+                    return false;
+                }
+                
+                if (objectSpotted(world, tempgrid, x - i, y+j, ZOMBIE)) {
+                    return false;
+                }
+                
+                if (objectSpotted(world, tempgrid, x + i, y-j, ZOMBIE)) {
+                    return false;
+                }
+            }
+        }
+        return true;
 	}
 
 	public boolean objectSpotted(World world, Tile[][] tempgrid, int xCo, int yCo, String object) {
