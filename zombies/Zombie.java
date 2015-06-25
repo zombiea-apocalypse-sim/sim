@@ -175,9 +175,6 @@ class Zombie extends Tile {
 		int endX = this.x + range;
 		int endY = this.y + range;
 
-		int zombies = 0;
-		int humans = 0;
-
 		if (startX < 0) {
 			startX = 0;
 		}
@@ -204,8 +201,9 @@ class Zombie extends Tile {
 
 	/*
 	 * Find closest human
-	 * Returns the tile of the closest human. If multiple tiles are closest
-	 * pick a random tile from the closest tiles.
+	 * Returns the tile of the closest human. If
+	 * multiple tiles are closest pick a random tile
+	 * from the closest tiles.
 	 */
 	public Tile findClosestHuman(World world, Tile[][] tempgrid) {
 		ArrayList<Tile> humanTiles = getNeighbourHumans(world, tempgrid, 3);
