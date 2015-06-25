@@ -59,55 +59,52 @@ class Human extends Tile {
 	 * Randomly move when no other humans are near
 	 */
 	public void move(World world, Tile[][] tempgrid) {
-		if (!humanNear(world, tempgrid)) {
+		if(!humanNear(world, tempgrid)) {
 			randomMove(world, tempgrid);
 		}
 	}
 
 	/*
-	 * Returns true if a position is on the grid
+	 * Returns true if a moving would not result in being on a position 
+	 * outside the grid, or if it would result in being closer to a zombie
 	 */
 	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
-		if (x < 0 || x >= world.width) {
+	    if (x < 0 || x >= world.width) {
+		return false;
+	    }
+
+	    if (y < 0 || y >= world.height) {
+		return false;
+	    }
+
+	    if (world.grid[x][y].type != LAND) {
+		return false;
+	    }
+
+	    if (tempgrid[x][y].type != LAND) {
+		return false;
+	    }
+
+	    for (int i = 1; i <= senseRange; i++) {
+		for(int j = senseRange; j >= 0; j--) {
+		    if (objectSpotted(world, tempgrid, x - j, y-i, ZOMBIE)) {
 			return false;
-		}
-
-		if (y < 0 || y >= world.height) {
-			return false;
-		}
-
-		if (world.grid[x][y].type != LAND) {
-			return false;
-		}
-
-		if (tempgrid[x][y].type != LAND) {
-			return false;
-		}
-
-		for (int i = 1; i <= senseRange; i++) {
-			if (objectSpotted(world, tempgrid, x, y - i, ZOMBIE)) {
-				return false;
-			}
-		}
-
-		for (int i = 1; i <= senseRange; i++) {
-			if (objectSpotted(world, tempgrid, x + i, y, ZOMBIE)) {
-				return false;
-			}
-		}
-
-		for (int i = 1; i <= senseRange; i++) {
-			if (objectSpotted(world, tempgrid, x - i, y, ZOMBIE)) {
-				return false;
-			}
-		}
-
-		for (int i = 1; i <= senseRange; i++) {
-			if (objectSpotted(world, tempgrid, x, y + i, ZOMBIE)) {
-				return false;
-			}
-		}
-		return true;
+		    }
+	    
+                if (objectSpotted(world, tempgrid, x + j, y+i, ZOMBIE)) {
+                    return false;
+                }
+                
+                if (objectSpotted(world, tempgrid, x - i, y+j, ZOMBIE)) {
+                    return false;
+                }
+                
+                if (objectSpotted(world, tempgrid, x + i, y-j, ZOMBIE)) {
+                    return false;
+                }
+            }
+        }
+        return true;
 	}
 
 	public boolean objectSpotted(World world, Tile[][] tempgrid, int xCo, int yCo, String object) {
@@ -173,36 +170,30 @@ class Human extends Tile {
 	}
 
 	/*
-	 * Returns true when human is near a cluster
+	 * Returns true when human is near another human
 	 */
 	public boolean humanNear(World world, Tile[][] tempgrid) {
 		int counter = 0;
 		boolean returnBool = false;
-		if (objectSpotted(world, tempgrid, x, y - 1, HUMAN)) {
-			counter += 1;
+		for (int i = 1; i <= 1; i++) {
+		    for(int j = 1; j >= 0; j--) {
+                if (objectSpotted(world, tempgrid, x - j, y-i, HUMAN)) {
+		    counter += 1;
+                }
+                
+                if (objectSpotted(world, tempgrid, x + j, y+i, HUMAN)) {
+		    counter += 1;
+                }
+                
+                if (objectSpotted(world, tempgrid, x - i, y+j, HUMAN)) {
+		    counter += 1;
+                }
+                
+                if (objectSpotted(world, tempgrid, x + i, y-j, HUMAN)) {
+		    counter += 1;
+                }
+		    }
 		}
-		if (objectSpotted(world, tempgrid, x + 1, y, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x - 1, y, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x, y + 1, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x + 1, y + 1, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x + 1, y - 1, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x - 1, y + 1, HUMAN)) {
-			counter += 1;
-		}
-		if (objectSpotted(world, tempgrid, x - 1, y - 1, HUMAN)) {
-			counter += 1;
-		}
-
 		if (counter >= clusterSize) {
 			returnBool = true;
 			this.color = Color.red;
