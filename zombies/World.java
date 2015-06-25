@@ -39,11 +39,21 @@ public class World extends JPanel {
 	 */
 	public void update() {
 		Tile[][] temp = new Tile[width][height];
+		
+		// Update humans->zombies and zombies->death
 		for (int i = 0; i < grid.length; i++) {
 			System.arraycopy(grid[i], 0, temp[i], 0, grid[i].length);
 		}
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				temp[x][y].update(this, temp);
+			}
+		}
 
 		// Move zombies and humans
+		for (int i = 0; i < grid.length; i++) {
+			System.arraycopy(grid[i], 0, temp[i], 0, grid[i].length);
+		}
 		if (flip) {
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
@@ -58,16 +68,6 @@ public class World extends JPanel {
 			}
 		}
 		flip = !flip;
-
-		// Update humans->zombies and zombies->death
-		for (int i = 0; i < grid.length; i++) {
-			System.arraycopy(grid[i], 0, temp[i], 0, grid[i].length);
-		}
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				temp[x][y].update(this, temp);
-			}
-		}
 	}
 
 	/*

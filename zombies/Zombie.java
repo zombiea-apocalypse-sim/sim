@@ -8,6 +8,8 @@ import java.util.ArrayList;
  * Zombie class.
  */
 class Zombie extends Tile {
+	boolean foundHuman = false;
+	
 	public Zombie(int x, int y) {
 		super(x, y);
 		this.color = Color.green;
@@ -15,47 +17,14 @@ class Zombie extends Tile {
 	}
 
 	/*
-	 * Update tile
-	 * When humans are outnumbered new tile is
-	 * zombie tile and human tile disappears.
-	 * When zombies are outnumbered new tile is
-	 * human tile and zombie disappears.
+	 * Update Zombie (Game of life style, with our own rules)
 	 */
 	@Override
 	public void update(World world, Tile[][] oldgrid) {
-		int startX = this.x - 1;
-		int startY = this.y - 1;
-		int endX = this.x + 2;
-		int endY = this.y + 2;
-
-		int zombies = 0;
-		int humans = 0;
-
-		if (startX < 0) {
-			startX = 0;
-		}
-		if (startY < 0) {
-			startY = 0;
-		}
-		if (endX > world.width) {
-			endX = world.width;
-		}
-		if (endY > world.height) {
-			endY = world.height;
-		}
-
-		for (int iy = startY; iy < endY; iy++) {
-			for (int ix = startX; ix < endX; ix++) {
-				if (oldgrid[ix][iy].type == HUMAN) {
-					humans++;
-				}
-				if (oldgrid[ix][iy].type == ZOMBIE) {
-					zombies++;
-				}
-			}
-		}
-
-		if (humans > zombies) {
+		Tuple count = countMooreNeighborhood(world, oldgrid);
+		
+		/* Dies when there are more amount of humans then there are humans */
+		if (count.humans > count.zombies) {
 			world.grid[this.x][this.y] = new Tile(this.x, this.y);
 		}
 	}
@@ -69,8 +38,12 @@ class Zombie extends Tile {
 	public void move(World world, Tile[][] tempgrid) {
 		Tile clossestHuman = findClosestHuman(world, tempgrid);
 		if (clossestHuman == null) {
+			foundHuman = false;
+			this.color = Color.green;
 			randomMove(world, tempgrid);
 		} else {
+			foundHuman = true;
+			this.color = Color.darkGray;
 			searchHumanMove(world, clossestHuman);
 		}
 	}
@@ -80,15 +53,15 @@ class Zombie extends Tile {
 	 * Move in an direction closer to the closest human
 	 */
 	private void searchHumanMove(World world, Tile clossestHumanTile) {
-
+		
 		if (this.y < clossestHumanTile.y) {
-			moveInDir(world, NORTH);
-		} else if (this.y > clossestHumanTile.y) {
 			moveInDir(world, SOUTH);
+		} else if (this.y > clossestHumanTile.y) {
+			moveInDir(world, NORTH);
 		} else if (this.x < clossestHumanTile.x) {
-			moveInDir(world, WEST);
-		} else {
 			moveInDir(world, EAST);
+		} else if (this.x > clossestHumanTile.x) {
+			moveInDir(world, WEST);
 		}
 	}
 
@@ -168,7 +141,7 @@ class Zombie extends Tile {
 	 * a specific range from the current zombie tile
 	 */
 	public ArrayList<Tile> getNeighbourHumans(World world, Tile[][] tempgrid, int range) {
-		ArrayList<Tile> humanTiles = new ArrayList<>();
+		ArrayList<Tile> humanTiles = new ArrayList<Tile>();
 
 		int startX = this.x - range;
 		int startY = this.y - range;
@@ -217,7 +190,7 @@ class Zombie extends Tile {
 
 		}
 
-		ArrayList<Tile> clossestList = new ArrayList();
+		ArrayList<Tile> clossestList = new ArrayList<Tile>();
 
 		for (Tile tile : humanTiles) {
 			int distance = manhattanDistance(tile.x, tile.y);
@@ -226,8 +199,7 @@ class Zombie extends Tile {
 		}
 
 		Random rand = new Random();
-
-		if (clossestList == null) {
+		if(clossestList.size() > 0) {
 			return clossestList.get(rand.nextInt(clossestList.size()));
 		}
 		return null;
