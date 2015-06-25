@@ -59,7 +59,7 @@ class Human extends Tile {
 	 * Randomly move when no other humans are near
 	 */
 	public void move(World world, Tile[][] tempgrid) {
-		if (!humanNear(world, tempgrid)) {
+		if(!humanNear(world, tempgrid)) {
 			randomMove(world, tempgrid);
 		}
 	}
