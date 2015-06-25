@@ -9,9 +9,9 @@ public class Menu extends JPanel {
 	public JSlider humanCount;
 	public JCheckBox runBehavior;
 	public JCheckBox killBehavior;
-	
+
 	public JButton newBoard;
-	
+
 	public Menu(World world) {
 		zombieCount = new JSlider(5, 100);
 		zombieCount.setLayout(null);
@@ -21,7 +21,7 @@ public class Menu extends JPanel {
 		zombieCount.setVisible(true);
 		zombieCount.setFocusable(false);
 		this.add(zombieCount);
-		
+
 		humanCount = new JSlider(50, 1000);
 		humanCount.setLayout(null);
 		humanCount.setMajorTickSpacing(50);
@@ -30,16 +30,16 @@ public class Menu extends JPanel {
 		humanCount.setVisible(true);
 		humanCount.setFocusable(false);
 		this.add(humanCount);
-		
+
 		runBehavior = new JCheckBox("Run");
 		killBehavior = new JCheckBox("Kill");
-		
+
 		runBehavior.setFocusable(false);
 		killBehavior.setFocusable(false);
-		
+
 		this.add(runBehavior);
 		this.add(killBehavior);
-		
+
 		newBoard = new JButton("Recreate Board");
 		newBoard.setLayout(null);
 		newBoard.setVisible(true);
@@ -53,7 +53,7 @@ public class Menu extends JPanel {
 		});
 		this.add(newBoard);
 	}
-	
+
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.white);

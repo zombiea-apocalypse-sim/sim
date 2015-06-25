@@ -11,8 +11,8 @@ public class ZombieSimulator {
 	final static int height = 80;
 	final static int tileSize = 10;
 	private static boolean pause = false;
-	
-	
+
+
 	/*
 	 * Main Function
 	 */
@@ -20,26 +20,26 @@ public class ZombieSimulator {
 		/* Schedule a job for the event-dispatching thread:
 		 * creating and showing this application's GUI.
 		 */
-				
+
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				initWindow();
 			}
 		});
-		
+
 	}
-	
-	/* 
+
+	/*
 	 * Init the window with the GUI.
 	 */
 	private static void initWindow() {
 		/* Create and set up the window (JFrame). */
 		int windowWidth = width * tileSize;
 		int windowHeight = height * tileSize;
-		
+
 		JFrame frame = new JFrame("Zombie Simulator 2015");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		frame.setSize(windowWidth, windowHeight + windowBarHeight);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dim.getWidth() - frame.getWidth()) / 2);
@@ -53,8 +53,8 @@ public class ZombieSimulator {
 		frame.add(total, BorderLayout.CENTER);
 		
 		/* Create ans setup World (extends JPanel) */
-		World world = new World(width, height, width*height/8, 10);
-		
+		World world = new World(width, height, width * height / 8, 10);
+
 		world.setTileSize(tileSize);
 		world.setBounds(0, 0, windowWidth, windowHeight);
 		world.setOpaque(true);
@@ -62,7 +62,7 @@ public class ZombieSimulator {
 		
 		/* Create ans setup Menu (extends JPanel) */
 		Menu menu = new Menu(world);
-		menu.setBounds(200, 200, windowWidth - 2*200, windowHeight - 2*200);
+		menu.setBounds(200, 200, windowWidth - 2 * 200, windowHeight - 2 * 200);
 		menu.setOpaque(true);
 		menu.setVisible(false);
 		total.add(menu, 1, 0);
@@ -70,24 +70,26 @@ public class ZombieSimulator {
 		/* Add keylistener for opening and closing menu */
 		frame.addKeyListener(new KeyListener() {
 			@Override
-			public void keyTyped(KeyEvent e) {}
+			public void keyTyped(KeyEvent e) {
+			}
 
 			@Override
-			public void keyReleased(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {
+			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyChar() == 'm') {
+				if (e.getKeyChar() == 'm') {
 					menu.setVisible(!menu.isVisible());
 				}
-				if(e.getKeyChar() == 'p') {
+				if (e.getKeyChar() == 'p') {
 					pause = !pause;
 				}
-				if(e.getKeyChar() == 'r') {
+				if (e.getKeyChar() == 'r') {
 					pause = false;
 					menu.setVisible(false);
 				}
-				if(e.getKeyChar() == 'n') {
+				if (e.getKeyChar() == 'n') {
 					world.createGrid();
 				}
 			}
@@ -99,11 +101,11 @@ public class ZombieSimulator {
 		 */
 		new javax.swing.Timer(20, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!menu.isVisible() && !pause) {
+				if (!menu.isVisible() && !pause) {
 					world.update();
 				}
 				frame.getContentPane().repaint();
-        	}
+			}
 		}).start();
 	}
 }
