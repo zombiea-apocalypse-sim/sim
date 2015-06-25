@@ -1,10 +1,12 @@
 package zombies;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 import java.util.ArrayList;
 
+/*
+ * Zombie class.
+ */
 class Zombie extends Tile {
 	public Zombie(int x, int y) {
 		super(x, y);
@@ -12,6 +14,13 @@ class Zombie extends Tile {
 		this.type = ZOMBIE;
 	}
 
+	/*
+	 * Update tile
+	 * When humans are outnumbered new tile is
+	 * zombie tile and human tile disappears.
+	 * When zombies are outnumbered new tile is
+	 * human tile and zombie disappears.
+	 */
 	@Override
 	public void update(World world, Tile[][] oldgrid) {
 		int startX = this.x - 1;
@@ -51,6 +60,11 @@ class Zombie extends Tile {
 		}
 	}
 
+	/*
+	 * Moves zombie
+	 * When a human is close move closer to the human otherwise
+	 * move randomly.
+	 */
 	@Override
 	public void move(World world, Tile[][] tempgrid) {
 		Tile clossestHuman = findClosestHuman(world, tempgrid);
@@ -61,6 +75,10 @@ class Zombie extends Tile {
 		}
 	}
 
+	/*
+	 * Move to human
+	 * Move in an direction closer to the closest human
+	 */
 	private void searchHumanMove(World world, Tile clossestHumanTile) {
 
 		if (this.y < clossestHumanTile.y) {
@@ -74,6 +92,10 @@ class Zombie extends Tile {
 		}
 	}
 
+	/*
+	 * Randomly move
+	 * Do a move in a random direction
+	 */
 	private void randomMove(World world, Tile[][] tempgrid) {
 		Random rand = new Random();
 		int temp = rand.nextInt(4);
@@ -119,6 +141,10 @@ class Zombie extends Tile {
 		}
 	}
 
+	/*
+	 * Randomly move
+	 * Do a move in a random direction
+	 */
 	public boolean validMove(World world, Tile[][] tempgrid, int x, int y) {
 		if (x < 0 || x >= world.width) {
 			return false;
@@ -136,6 +162,11 @@ class Zombie extends Tile {
 		return true;
 	}
 
+	/*
+	 * Return close human tiles
+	 * Returns an ArrayList of human tiles in
+	 * a specific range from the current zombie tile
+	 */
 	public ArrayList<Tile> getNeighbourHumans(World world, Tile[][] tempgrid, int range) {
 		ArrayList<Tile> humanTiles = new ArrayList<>();
 
@@ -171,11 +202,15 @@ class Zombie extends Tile {
 		return humanTiles;
 	}
 
+	/*
+	 * Find closest human
+	 * Returns the tile of the closest human. If multiple tiles are closest
+	 * pick a random tile from the closest tiles.
+	 */
 	public Tile findClosestHuman(World world, Tile[][] tempgrid) {
 		ArrayList<Tile> humanTiles = getNeighbourHumans(world, tempgrid, 3);
 
-		Tile clossestTile = null;
-		int smallestDistance = 9999;
+		int smallestDistance = 99999;
 
 		for (Tile tile : humanTiles) {
 			int distance = manhattanDistance(tile.x, tile.y);
