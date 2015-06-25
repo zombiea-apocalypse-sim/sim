@@ -42,7 +42,7 @@ public class ZombieSimulator {
 
 		JFrame frame = new JFrame("Zombie Simulator 2015");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         URL iconURL = ZombieSimulator.class.getResource("resources/zombie-icon.png");
         ImageIcon icon = new ImageIcon(iconURL);
         frame.setIconImage(icon.getImage());
