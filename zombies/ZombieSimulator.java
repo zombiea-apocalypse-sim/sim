@@ -6,7 +6,7 @@ import java.awt.event.*;
 
 public class ZombieSimulator {
 	/* Simulator constants */
-	final static int windowBarHeight = 22;
+	static int windowBarHeight = 0;
 	final static int width = 120;
 	final static int height = 80;
 	final static int tileSize = 10;
@@ -20,13 +20,16 @@ public class ZombieSimulator {
 		/* Schedule a job for the event-dispatching thread:
 		 * creating and showing this application's GUI.
 		 */
-
+		
+		if (System.getProperty("os.name").startsWith("Mac")) {
+			windowBarHeight = 22;
+		}
+		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				initWindow();
 			}
 		});
-
 	}
 
 	/*
@@ -53,7 +56,7 @@ public class ZombieSimulator {
 		frame.add(total, BorderLayout.CENTER);
 		
 		/* Create ans setup World (extends JPanel) */
-		World world = new World(width, height, width * height / 8, 10);
+		World world = new World(width, height, width * height / 6, 10);
 
 		world.setTileSize(tileSize);
 		world.setBounds(0, 0, windowWidth, windowHeight);
@@ -95,11 +98,40 @@ public class ZombieSimulator {
 			}
 		});
 		
+		/* Add mouse events for adding zombies/humans to the grid */
+		frame.addMouseMotionListener(new MouseAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if(!menu.isVisible()) {
+					if(SwingUtilities.isRightMouseButton(e)) {
+						world.spawnZombieOnClick(e.getX(), e.getY() - windowBarHeight);
+					}
+					else if(SwingUtilities.isLeftMouseButton(e)) {
+						world.spawnHumanOnClick(e.getX(), e.getY() - windowBarHeight);
+					}
+				}
+			}
+		});
+		
+		frame.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!menu.isVisible()) {	
+					if(SwingUtilities.isRightMouseButton(e)) {
+						world.spawnZombieOnClick(e.getX(), e.getY() - windowBarHeight);
+					}
+					else if(SwingUtilities.isLeftMouseButton(e)) {
+						world.spawnHumanOnClick(e.getX(), e.getY() - windowBarHeight);
+					}
+				}
+			}
+		});
+
 		/* Add timer for updating world state
 		 * Pause the simulation once menu is open
 		 * Heart of the program!
 		 */
-		new javax.swing.Timer(20, new ActionListener() {
+		new javax.swing.Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!menu.isVisible() && !pause) {
 					world.update();

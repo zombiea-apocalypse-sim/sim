@@ -124,13 +124,18 @@ public class World extends JPanel {
 	}
 
 	/*
-	 * Infect human
-	 * Infect a human by coordinate
+	 * Spawn zombie by clicking on a tile
 	 */
-	public void infectHuman(int x, int y) {
-		if (grid[x][y].type == Tile.HUMAN) {
-			grid[x][y] = new Zombie(x, y);
-		}
+	public void spawnZombieOnClick(int pixelX, int pixelY) {
+		int x = pixelX / tileSize;
+		int y = pixelY / tileSize;
+		grid[x][y] = new Zombie(x, y);
+	}
+	
+	public void spawnHumanOnClick(int pixelX, int pixelY) {
+		int x = pixelX / tileSize;
+		int y = pixelY / tileSize;
+		grid[x][y] = new Human(x, y);
 	}
 
 	/*
@@ -139,10 +144,15 @@ public class World extends JPanel {
 	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.setColor(Color.yellow);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				g.setColor(grid[x][y].color);
-				g.fillRect(x * tileSize, y * tileSize, (x * tileSize) + tileSize, (y * tileSize) + tileSize);
+				if(grid[x][y].type != Tile.LAND) {
+					g.setColor(grid[x][y].color);
+					g.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+				}
 			}
 		}
 	}

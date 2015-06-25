@@ -55,7 +55,7 @@ class Zombie extends Tile {
 			}
 		}
 
-		if (humans >= zombies) {
+		if (humans > zombies) {
 			world.grid[this.x][this.y] = new Tile(this.x, this.y);
 		}
 	}
@@ -206,7 +206,7 @@ class Zombie extends Tile {
 	 * from the closest tiles.
 	 */
 	public Tile findClosestHuman(World world, Tile[][] tempgrid) {
-		ArrayList<Tile> humanTiles = getNeighbourHumans(world, tempgrid, 3);
+		ArrayList<Tile> humanTiles = getNeighbourHumans(world, tempgrid, 5);
 
 		int smallestDistance = 99999;
 
