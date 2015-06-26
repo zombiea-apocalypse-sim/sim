@@ -1,0 +1,2 @@
+Class-Path: zombies
+Main-Class: zombies.ZombieSimulator
