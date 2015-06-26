@@ -66,15 +66,6 @@ public class Menu extends JPanel {
 
 		this.add(Box.createRigidArea(new Dimension(0, 15)));
 
-		runBehavior = new JCheckBox("Run");
-		killBehavior = new JCheckBox("Kill");
-
-		runBehavior.setFocusable(false);
-		killBehavior.setFocusable(false);
-
-		this.add(runBehavior);
-		this.add(killBehavior);
-
 		newBoard = new JButton("Recreate Board");
 		newBoard.setLayout(null);
 		newBoard.setVisible(true);
