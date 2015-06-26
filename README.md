@@ -5,7 +5,13 @@ Current version: 1.0
 (java version > 1.8)
 $ ./makefile
 
-### Keyboard commands:
+### Controls:
+
+Keyboard:
 * Menu: "m"
 * Pause: "p"
 * Create new world: "n"
+
+Mouse:
+* Create human: left mouse click
+* Create zombie: right mouse click
