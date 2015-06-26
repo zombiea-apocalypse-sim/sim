@@ -44,6 +44,10 @@ public class ZombieSimulator {
 
 		JFrame frame = new JFrame("Zombie Simulator 2015");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		try {
+			frame.setIconImage(ImageIO.read(ZombieSimulator.class.getResource("resources/zombie-icon.png")));
+		}
+		catch(Exception e) {}
 
 		frame.setSize(windowWidth, windowHeight + windowBarHeight);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
