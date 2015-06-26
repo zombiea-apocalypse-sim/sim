@@ -5,6 +5,11 @@ Current version: 1.0
 (java version > 1.8)
 $ ./makefile
 
+make jar: creates an executable jar, can also be downloaded.
+make run: run the program (does not compile files!)
+make all: create and run the program
+make clean: clean class files
+
 ### Controls:
 
 Keyboard:
@@ -13,5 +18,5 @@ Keyboard:
 * Create new world: "n"
 
 Mouse:
-* Create human: left mouse click
-* Create zombie: right mouse click
+* Create human: left mouse click (can drag when holding button down)
+* Create zombie: right mouse click (can drag when holding button down)
