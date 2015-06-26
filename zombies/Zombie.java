@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 class Zombie extends Tile {
 	boolean foundHuman = false;
-	
+
 	public Zombie(int x, int y) {
 		super(x, y);
 		this.color = Color.green;
@@ -22,7 +22,7 @@ class Zombie extends Tile {
 	@Override
 	public void update(World world, Tile[][] oldgrid) {
 		Tuple count = countMooreNeighborhood(world, oldgrid);
-		
+
 		/* Dies when there are more amount of humans then there are humans */
 		if (count.humans > count.zombies) {
 			world.grid[this.x][this.y] = new Tile(this.x, this.y);
@@ -53,7 +53,7 @@ class Zombie extends Tile {
 	 * Move in an direction closer to the closest human
 	 */
 	private void searchHumanMove(World world, Tile clossestHumanTile) {
-		
+
 		if (this.y < clossestHumanTile.y) {
 			moveInDir(world, SOUTH);
 		} else if (this.y > clossestHumanTile.y) {
@@ -199,7 +199,7 @@ class Zombie extends Tile {
 		}
 
 		Random rand = new Random();
-		if(clossestList.size() > 0) {
+		if (clossestList.size() > 0) {
 			return clossestList.get(rand.nextInt(clossestList.size()));
 		}
 		return null;

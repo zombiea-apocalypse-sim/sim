@@ -16,20 +16,20 @@ class Tile {
 	int y;
 	Color color;
 	String type;
-	
+
 	/*
 	 * Inner tuple class used for counting zombies and humans
 	 */
-	public class Tuple { 
-		public final int humans; 
-		public final int zombies; 
-		
-		private Tuple(int humans, int zombies) { 
-			this.humans = humans; 
-			this.zombies = zombies; 
-		} 
+	public class Tuple {
+		public final int humans;
+		public final int zombies;
+
+		private Tuple(int humans, int zombies) {
+			this.humans = humans;
+			this.zombies = zombies;
+		}
 	}
-	
+
 	/*
 	 * Tile constructor
 	 */
@@ -46,8 +46,8 @@ class Tile {
 
 	public void move(World world, Tile[][] oldgrid) {
 	}
-	
-	/* 
+
+	/*
 	 * Move the tile in a direction
 	 */
 	public void moveInDir(World world, int dir) {
@@ -77,7 +77,7 @@ class Tile {
 		this.x = new_x;
 		this.y = new_y;
 	}
-	
+
 	/*
 	 * Count the zombies and humans in the Moore neighborhood
 	 */
@@ -113,7 +113,7 @@ class Tile {
 				}
 			}
 		}
-		
+
 		return new Tuple(humans, zombies);
 	}
 

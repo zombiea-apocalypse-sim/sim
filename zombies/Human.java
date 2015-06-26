@@ -19,7 +19,7 @@ class Human extends Tile {
 	@Override
 	public void update(World world, Tile[][] oldgrid) {
 		Tuple count = countMooreNeighborhood(world, oldgrid);
-		
+
 		/* Becomes a zombie when there are more or equal amount of zombies
 		 * as there are humans
 		 */
@@ -33,13 +33,13 @@ class Human extends Tile {
 	 */
 	@Override
 	public void move(World world, Tile[][] oldgrid) {
-		if(!humanNear(world, oldgrid)) {
+		if (!humanNear(world, oldgrid)) {
 			randomMove(world, oldgrid);
 		}
 	}
 
 	/*
-	 * Returns true if a moving would not result in being on a position 
+	 * Returns true if a moving would not result in being on a position
 	 * outside the grid, or if it would result in being closer to a zombie
 	 */
 	private boolean validMove(World world, Tile[][] oldgrid, int x, int y) {
@@ -62,7 +62,7 @@ class Human extends Tile {
 		/* Return false when there is a zombie in range */
 		return !zombieInRange(world, oldgrid);
 	}
-	
+
 	private boolean zombieInRange(World world, Tile[][] oldgrid) {
 		int startX = this.x - senseRange;
 		int startY = this.y - senseRange;
@@ -89,7 +89,7 @@ class Human extends Tile {
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -146,8 +146,8 @@ class Human extends Tile {
 	 */
 	private boolean humanNear(World world, Tile[][] oldgrid) {
 		Tuple count = countMooreNeighborhood(world, oldgrid);
-		
-		if(count.humans >= clusterSize) {
+
+		if (count.humans >= clusterSize) {
 			this.color = Color.red;
 			return true;
 		}

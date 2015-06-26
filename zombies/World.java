@@ -39,7 +39,7 @@ public class World extends JPanel {
 	 */
 	public void update() {
 		Tile[][] temp = new Tile[width][height];
-		
+
 		// Update humans->zombies and zombies->death
 		for (int i = 0; i < grid.length; i++) {
 			System.arraycopy(grid[i], 0, temp[i], 0, grid[i].length);
@@ -131,7 +131,7 @@ public class World extends JPanel {
 		int y = pixelY / tileSize;
 		grid[x][y] = new Zombie(x, y);
 	}
-	
+
 	public void spawnHumanOnClick(int pixelX, int pixelY) {
 		int x = pixelX / tileSize;
 		int y = pixelY / tileSize;
@@ -146,10 +146,10 @@ public class World extends JPanel {
 		super.paintComponent(g);
 		g.setColor(Color.yellow);
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
+
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				if(grid[x][y].type != Tile.LAND) {
+				if (grid[x][y].type != Tile.LAND) {
 					g.setColor(grid[x][y].color);
 					g.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
 				}

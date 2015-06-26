@@ -12,7 +12,7 @@ public class ZombieSimulator {
 	final static int height = 80;
 	final static int tileSize = 10;
 	private static boolean pause = false;
-	
+
 	/*
 	 * Main Function
 	 */
@@ -20,11 +20,11 @@ public class ZombieSimulator {
 		/* Schedule a job for the event-dispatching thread:
 		 * creating and showing this application's GUI.
 		 */
-		
+
 		if (System.getProperty("os.name").startsWith("Mac")) {
 			windowBarHeight = 22;
 		}
-		
+
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				initWindow();
@@ -43,9 +43,9 @@ public class ZombieSimulator {
 		JFrame frame = new JFrame("Zombie Simulator 2015");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        URL iconURL = ZombieSimulator.class.getResource("resources/zombie-icon.png");
-        ImageIcon icon = new ImageIcon(iconURL);
-        frame.setIconImage(icon.getImage());
+		URL iconURL = ZombieSimulator.class.getResource("resources/zombie-icon.png");
+		ImageIcon icon = new ImageIcon(iconURL);
+		frame.setIconImage(icon.getImage());
 
 		frame.setSize(windowWidth, windowHeight + windowBarHeight);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -106,25 +106,23 @@ public class ZombieSimulator {
 		frame.addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				if(!menu.isVisible()) {
-					if(SwingUtilities.isRightMouseButton(e)) {
+				if (!menu.isVisible()) {
+					if (SwingUtilities.isRightMouseButton(e)) {
 						world.spawnZombieOnClick(e.getX(), e.getY() - windowBarHeight);
-					}
-					else if(SwingUtilities.isLeftMouseButton(e)) {
+					} else if (SwingUtilities.isLeftMouseButton(e)) {
 						world.spawnHumanOnClick(e.getX(), e.getY() - windowBarHeight);
 					}
 				}
 			}
 		});
-		
+
 		frame.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(!menu.isVisible()) {	
-					if(SwingUtilities.isRightMouseButton(e)) {
+				if (!menu.isVisible()) {
+					if (SwingUtilities.isRightMouseButton(e)) {
 						world.spawnZombieOnClick(e.getX(), e.getY() - windowBarHeight);
-					}
-					else if(SwingUtilities.isLeftMouseButton(e)) {
+					} else if (SwingUtilities.isLeftMouseButton(e)) {
 						world.spawnHumanOnClick(e.getX(), e.getY() - windowBarHeight);
 					}
 				}
